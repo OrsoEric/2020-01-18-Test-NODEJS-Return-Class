@@ -1,3 +1,6 @@
+//Size of the int array
+#define INT_ARRAY_SIZE	2
+
 namespace User
 {
 	//Class I want to return to NODE.JS
@@ -8,10 +11,10 @@ namespace User
 			My_class( void );
 			//Public references
 			float &my_float( void );
-			int &my_int( void );
+			int &my_int( int index );
 		private:
 			//Private class vars
 			float g_my_float;
-			int g_my_int;
+			int g_my_int[4];
 	};
 }	//End namestace: User
