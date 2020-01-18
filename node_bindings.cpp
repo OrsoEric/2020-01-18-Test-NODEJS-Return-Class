@@ -60,11 +60,16 @@ Napi::Object get_my_class(const Napi::CallbackInfo& info)
 	{
 		Napi::TypeError::New(env, "ERR: Expecting no arguments").ThrowAsJavaScriptException();
 	}
-	//Get the return value
+	//Get a copy of the instance of the class I want to return
 	User::My_class tmp = g_instance;
-	//Return a NODE.JS number
-    return Napi:Object::New(env, (User::My_class)tmp);
-} //End Function: get_my_float | Napi::CallbackInfo&
+	//Construct empty return object in the NODE.JS environment
+	Napi::Object ret_tmp = Napi::Object::New( env );
+	//Manually create and fill the fields of the return object
+	ret_tmp.Set("my_float", Napi::Number::New( env, (float)tmp.my_float() ));
+	ret_tmp.Set("my_int", Napi::Number::New( env, (int)tmp.my_int() ));
+	//Return a NODE.JS Object
+    return (Napi::Object)ret_tmp;
+} //End Function: get_my_class | Napi::CallbackInfo&
 #endif // ENABLE_RETURN_CLASS
 
 NODE_API_MODULE( My_cpp_module, init )
